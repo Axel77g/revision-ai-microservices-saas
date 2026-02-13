@@ -20,6 +20,8 @@ L'écosystème de Revision AI est constitué de trois services principaux, compl
 
 Les services **File Parser** et **Quiz Generator** sont entièrement découplés, ce qui offre la flexibilité de les réutiliser dans d'autres projets.
 
+<img width="577" height="468" alt="Capture d’écran 2026-02-13 à 20 11 43" src="https://github.com/user-attachments/assets/bbb66b86-8d45-4b84-983b-484f61b8c43d" />
+
 -----
 
 ## Interconnexion des services et workflow
@@ -49,6 +51,8 @@ Pour comprendre l'utilisation de la plateforme et garantir des performances opti
 * **Grafana** : Une plateforme d'observabilité open-source qui permet de visualiser les données collectées par Prometheus sous forme de tableaux de bord interactifs, offrant une vue d'ensemble claire de la santé et des performances du système. Grafana est également disponible dans le cluster et utilisable uniquement via port-forwarding.
 
 Enfin, l'accès externe à l'API est géré par un **Ingress NGINX**, agissant comme un point d'entrée unique et sécurisé pour toutes les requêtes entrantes, assurant la répartition de la charge et la terminaison SSL.
+
+<img width="908" height="469" alt="Capture d’écran 2026-02-13 à 20 12 06" src="https://github.com/user-attachments/assets/560e1aa4-f865-4513-9f88-04be28021ff2" />
 
 -----
 
