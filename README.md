@@ -4,9 +4,6 @@ Revision AI est une solution SaaS innovante conçue pour aider les collégiens e
 
 Pour garantir une **haute disponibilité**, une **scalabilité** et une **résilience** optimales, Revision AI s'appuie sur une **architecture distribuée** robuste, orchestrée par **Kubernetes**. Cette infrastructure est composée de plusieurs microservices interconnectés, chacun ayant un rôle spécifique dans le processus de création et de gestion des quiz.
 
-> URL : https://revision-ai.com
-> Login admin si besoin : axel@axel.com - 123456789@ESGI
-
 -----
 
 ## Architecture des services
@@ -127,7 +124,7 @@ sh scripts/build-docker-images.sh
 
 ## Déploiement sur Kubernetes (Local avec kind)
 
-> Le déploiement complet en production est géré par CI/CD via Github Actions ([`deploy-on-k8s.yml`](./.github/workflows/deploy-on-k8s.yml) nous vous conseillons d'utiliser l'app de production disponible ici [revision-ai.com](https://revision-ai.com) .
+> Le déploiement complet en production est géré par CI/CD via Github Actions ([`deploy-on-k8s.yml`](./.github/workflows/deploy-on-k8s.yml) l'app de production n'est plus disponible.
 
 ### Prérequis
 
