@@ -48,7 +48,7 @@ Les services **File Parser** et **Quiz Generator** sont entièrement découplés
 <img width="577" height="468" alt="Capture d’écran 2026-02-13 à 20 11 43" src="https://github.com/user-attachments/assets/bbb66b86-8d45-4b84-983b-484f61b8c43d" />
 
 
-📊 Observabilité et monitoring
+## 📊 Observabilité et monitoring
 
 - **Matomo** : analytics web pour comprendre l’usage de la plateforme.
 - **Prometheus** : collecte métriques temps réel sur les services.
