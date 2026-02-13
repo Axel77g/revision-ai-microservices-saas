@@ -1,64 +1,149 @@
-# Revision AI – SaaS de révisions intelligentes
+# 🎓 Revision AI – Architecture Microservices SaaS 
 
-Revision AI est une plateforme SaaS qui aide les collégiens et lycéens à réviser efficacement. Les utilisateurs peuvent téléverser leurs documents de cours et générer automatiquement des quiz personnalisés grâce à l’intelligence artificielle.
+**Plateforme SaaS de révisions intelligentes avec architecture distribuée moderne**
 
-Le projet illustre une architecture distribuée moderne, avec microservices, Kubernetes, RabbitMQ, et des outils d’observabilité (Prometheus, Grafana, Matomo).
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=flat&logo=rabbitmq&logoColor=white)](https://www.rabbitmq.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
-## 🚀 Objectif du projet
+---
 
-- Démontrer l’utilisation d’une architecture distribuée résiliente et scalable.
-- Appliquer des concepts modernes : microservices découplés, communication asynchrone via RabbitMQ, orchestration Kubernetes.
-- Montrer la mise en place d’une observabilité complète pour monitorer et analyser les performances des services.
-- Créer une solution pratique d’apprentissage interactif pour les étudiants.
+## 📋 Contexte & Objectif
 
-## 🛠️ Compétences démontrées
+**Problématique métier** : Les étudiants collégiens/lycéens manquent d'outils efficaces pour créer des quiz personnalisés à partir de leurs documents de cours.
 
-- Développement backend Node.js / TypeScript multi-service
-- Microservices découplés et communication asynchrone avec RabbitMQ
-- Bases de données NoSQL (MongoDB) et gestion des tâches
-- Orchestration Kubernetes (Ingress, LoadBalancer, secrets)
-- Observabilité et monitoring (Prometheus, Grafana, Matomo)
-- CI/CD et scripts de build pour dev et production
-- Déploiement local et production-ready avec Docker et kind
+**Solution développée** : SaaS permettant de téléverser des documents (PDF, images) et de générer automatiquement des quiz via intelligence artificielle.
 
-## 🏗️ Architecture du projet
+**Objectif technique principal** : Démontrer la maîtrise d'une architecture distribuée moderne, résiliente et scalable en production.
 
-- **Frontend** : interface web pour téléverser les cours et passer les quiz.
-- **API** : point d’entrée central, orchestre les requêtes et services.
-- **File Parser** : analyse les fichiers (PDF, images) et extrait les données structurées.
-- **Quiz Generator** : crée des quiz variés via IA (QCM, questions ouvertes).
-- **MongoDB** : stockage des documents, quiz et état des tâches.
-- **Communication asynchrone** : RabbitMQ pour découpler les services et garantir la résilience.
+---
 
-Tous les services sont stateless afin de pouvoir les distribuer/répliquer dans un cluster
+## 🏆 Réalisations techniques
 
-Les services **File Parser** et **Quiz Generator** sont entièrement découplés, ce qui offre la flexibilité de les réutiliser dans d'autres projets.
+### Architecture & Scalabilité
+- ✅ **Architecture microservices découplée** (3 services backend + frontend)
+- ✅ **Communication asynchrone** via RabbitMQ pour la résilience
+- ✅ **Services stateless** permettant la distribution en cluster
+- ✅ **Orchestration Kubernetes** avec Ingress, LoadBalancer, secrets
+- ✅ **CI/CD complet** via GitHub Actions
+
+### Observabilité & Production
+- ✅ **Stack d'observabilité complète** : Prometheus + Grafana + Matomo
+- ✅ **Métriques business personnalisées** et monitoring applicatif
+- ✅ **Déploiement production-ready** avec gestion des ressources
+- ✅ **Gestion des secrets** et configurations sécurisées
+
+### Patterns & Développement
+- ✅ **Clean Architecture** avec séparation des responsabilités
+- ✅ **Event-driven architecture** avec queues persistantes
+- ✅ **Domain-Driven Design** dans l'organisation du code
+- ✅ **Tests unitaires** et pipeline de qualité
+
+---
+
+## 🏗️ Architecture
+
+### Vue d'ensemble
+```
+Frontend (Vue.js) → API Gateway (NestJS) → [RabbitMQ] → Workers (TS/Node.js)
+                            ↓
+                    MongoDB (données/jobs)
+```
+
+### Composants principaux
+
+| Service | Technologie | Responsabilité | Patterns utilisés |
+|---------|-------------|----------------|-------------------|
+| **API Gateway** | NestJS + TypeScript | Orchestration, authentification, API REST | CQRS, Repository Pattern |
+| **File Parser** | Node.js + TypeScript | Parsing PDF/images, extraction de contenu | Worker Pattern, Clean Architecture |
+| **Quiz Generator** | Node.js + TypeScript | Génération IA de quiz, validation qualité | Retry Pattern, Circuit Breaker |
+| **Frontend** | Vue.js + TypeScript | Interface utilisateur, upload de fichiers | Composition API, State Management |
+
+### Infrastructure & DevOps
+
+```yaml
+Production Stack:
+├── Kubernetes (orchestration)
+│   ├── Ingress NGINX (load balancing)
+│   ├── RabbitMQ Cluster (messaging)
+│   └── MongoDB Replica Set (persistence)
+├── Observabilité
+│   ├── Prometheus (métriques)
+│   ├── Grafana (dashboards)
+│   └── Matomo (analytics web)
+└── CI/CD
+    ├── GitHub Actions
+    ├── Docker multi-stage builds
+    └── Automated deployments
+```
+
+---
 
 ## 🔄 Workflow de génération de quiz
 
-1. L’utilisateur téléverse un fichier via le frontend.
-2. L’API reçoit le fichier et l'upload sur un storage (ici un bucket S3).
-3. L'API demande le parsing du fichier au File Parser via RabbitMQ
-4. Le File Parser recupère le fichier
-5. Le File pParser retourne le fichier parsé (au format JSON) via RabbitMQ
-6. L’API orchestre le tout, si tous les fichiers du quiz sont parsés, elle envoient une demande de génération (RabbitMQ)
-7. Le quiz generator retourne le quiz généré a l'API
-8. L’api le stocke, le client peut le récupérer.
+**Pattern Event-Driven implementé :**
 
-<img width="577" height="468" alt="Capture d’écran 2026-02-13 à 20 11 43" src="https://github.com/user-attachments/assets/bbb66b86-8d45-4b84-983b-484f61b8c43d" />
+1. **Upload** → L'utilisateur téléverse un fichier (frontend)
+2. **Ingestion** → L'API stocke le fichier sur S3 et envoie un événement `file-uploaded`
+3. **Parsing** → Le File Parser traite le document et retourne `file-parsed`
+4. **Génération** → L'API orchestre et envoie `generate-quiz` au Quiz Generator
+5. **Finalisation** → Le quiz généré est stocké et accessible à l'utilisateur
 
+**Avantages de cette approche :**
+- Résilience : pannes de service isolées
+- Scalabilité : chaque worker peut être répliqué indépendamment  
+- Monitoring : tracking complet du pipeline via métriques
 
-## 📊 Observabilité et monitoring
+<img width="577" height="468" alt="Architecture Workflow" src="https://github.com/user-attachments/assets/bbb66b86-8d45-4b84-983b-484f61b8c43d" />
 
-- **Matomo** : analytics web pour comprendre l’usage de la plateforme.
-- **Prometheus** : collecte métriques temps réel sur les services.
-- **Grafana** : tableaux de bord interactifs pour visualiser la santé et les performances des services.
+---
 
-<img width="908" height="469" alt="Capture d’écran 2026-02-13 à 20 12 06" src="https://github.com/user-attachments/assets/560e1aa4-f865-4513-9f88-04be28021ff2" />
+## 📊 Fonctionnalités clés
 
------
+### Côté utilisateur
+- 📁 Upload multi-formats (PDF, images) avec validation
+- 🤖 Génération automatique de quiz IA (QCM, questions ouvertes)
+- 📈 Suivi des performances et analytics d'apprentissage
+- 💳 Système d'abonnements Stripe intégré
 
-# Setup dev
+### Côté technique  
+- 🔄 Pipeline de traitement asynchrone robuste
+- 📊 Métriques business en temps réel (temps de génération, taux d'erreur, retry)
+- 🔐 Authentification JWT + gestion des rôles
+- 📦 API REST documentée (OpenAPI/Swagger)
+
+---
+
+## 💡 Choix techniques / Patterns
+
+### Architecture
+- **Microservices** : Séparation claire des responsabilités, réutilisabilité
+- **Event-Driven** : Découplage via RabbitMQ, résilience aux pannes
+- **CQRS** : Séparation lecture/écriture pour optimiser les performances
+
+### DevOps & Production
+- **Kubernetes** : Orchestration, auto-healing, scaling horizontal
+- **Monitoring observability** : Détection proactive des issues
+- **Infrastructure as Code** : Manifests K8s versionnés, reproductibilité
+
+### Développement
+- **TypeScript** : Type safety, maintenabilité à grande échelle
+- **NestJS** : Architecture modulaire, injection de dépendances
+- **Clean Architecture** : Testabilité, isolation des couches métier
+
+<img width="908" height="469" alt="Monitoring Grafana" src="https://github.com/user-attachments/assets/560e1aa4-f865-4513-9f88-04be28021ff2" />
+
+---
+
+## 🚀 Mise en route
+
+### Prérequis
+- Node.js 22+
+- Docker & Docker Compose
+- Kubernetes (kind pour local)
 
 -----
 
@@ -179,4 +264,14 @@ Modifiez votre fichier `/etc/hosts` pour ajouter l'IP externe du cluster avec le
 
 Rendez-vous sur `http://revision-ai.local` pour accéder au frontend. L'API devrait être accessible sur `http://api.revision-ai.local`.
 
->
+--- 
+
+## 📝 Licence
+
+Projet académique — ESGI 5ème année
+
+---
+
+<p align="center">
+  <b>Développé par <a href="https://github.com/Insane-Bob">Insane-Bob</a> <a href="https://github.com/Robiinf">Robiinf</a> <a href="https://github.com/Prumme">Prumme</a> <a href="https://github.com/Axel77g">Axel77g</a></b><br>
+</p>
