@@ -58,9 +58,9 @@ Frontend (Vue.js) → API Gateway (NestJS) → [RabbitMQ] → Workers (TS/Node.j
 | Service | Technologie | Responsabilité | Patterns utilisés |
 |---------|-------------|----------------|-------------------|
 | **API Gateway** | NestJS + TypeScript | Orchestration, authentification, API REST | CQRS, Repository Pattern |
-| **File Parser** | Node.js + TypeScript | Parsing PDF/images, extraction de contenu | Worker Pattern, Clean Architecture |
-| **Quiz Generator** | Node.js + TypeScript | Génération IA de quiz, validation qualité | Retry Pattern, Circuit Breaker |
-| **Frontend** | Vue.js + TypeScript | Interface utilisateur, upload de fichiers | Composition API, State Management |
+| **File Parser** | Node.js + TypeScript | Parsing PDF/images, extraction de contenu | Worker Pattern, Archi Hexagonal |
+| **Quiz Generator** | Node.js + TypeScript | Génération IA de quiz, validation qualité | Retry Pattern, Archi Hexagonal |
+| **Frontend** | Vue.js + TypeScript | Interface utilisateur, upload de fichiers | N/A |
 
 ### Infrastructure & DevOps
 
