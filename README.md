@@ -30,7 +30,7 @@ Le projet illustre une architecture distribuée moderne, avec microservices, Kub
 - **MongoDB** : stockage des documents, quiz et état des tâches.
 - **Communication asynchrone** : RabbitMQ pour découpler les services et garantir la résilience.
 
-Tous les services sont stateless afin de pouvoir les distribués/répliqué dans un cluster
+Tous les services sont stateless afin de pouvoir les distribuer/répliquer dans un cluster
 
 Les services **File Parser** et **Quiz Generator** sont entièrement découplés, ce qui offre la flexibilité de les réutiliser dans d'autres projets.
 
